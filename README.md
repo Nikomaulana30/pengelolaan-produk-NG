@@ -4,10 +4,9 @@ Starter project Laravel untuk memulai development aplikasi baru dengan cepat.
 
 ## Persyaratan Sistem
 
-- PHP >= 8.1
+- PHP >= 8.4
 - Composer
-- MySQL/PostgreSQL
-- Node.js & NPM
+- MySQL
 
 ## Cara Clone Repository
 
@@ -23,9 +22,6 @@ cd metinca-starter-app
 ```bash
 # Install PHP dependencies
 composer install
-
-# Install Node dependencies
-npm install
 ```
 
 ### 3. Setup Environment
@@ -62,14 +58,11 @@ php artisan migrate
 ```bash
 # Jalankan development server
 php artisan serve
-
-# Di terminal lain, compile assets
-npm run dev
 ```
 
 Aplikasi akan berjalan di `http://localhost:8000`
 
-## Membuat Branch Baru
+## Membuat Branch Baru (opsional)
 
 ### Untuk Feature Baru
 
