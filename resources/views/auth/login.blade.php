@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Metinca - Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
@@ -73,29 +74,22 @@
                 </button>
             </form>
 
-            {{-- <!-- Divider -->
-            <div class="divider">
-                <span>atau masuk dengan</span>
-            </div>
-
-            <!-- Social Login -->
-            <div class="social-login">
-                <button class="btn-social" onclick="socialLogin('google')">
-                    <i class="bi bi-google"></i>
-                    Google
-                </button>
-                <button class="btn-social" onclick="socialLogin('microsoft')">
-                    <i class="bi bi-microsoft"></i>
-                    Microsoft
-                </button>
-            </div>
-
             <!-- Sign Up Link -->
             <div class="signup-link">
-                Belum punya akun? <a href="#">Daftar sekarang</a>
-            </div> --}}
-            <div class="signup-link">
-                kembali ke <a href="/home">Homepage</a>
+                Belum punya akun? <a href="{{ route('register') }}">Daftar sekarang</a>
+            </div>
+            
+            <div class="signup-link mt-2">
+                atau <a href="/home">Kembali ke Homepage</a>
+            </div>
+
+            <!-- Test Credentials Info -->
+            <div class="alert alert-info mt-4" style="background-color: #e8f4f8; border-color: #b8dce8; border-radius: 8px;">
+                <small style="color: #0c5460;">
+                    <strong>🔐 Akun Test:</strong><br>
+                    Email: <code>admin@metinca.local</code><br>
+                    Password: <code>admin123456</code>
+                </small>
             </div>
         </div>
     </div>

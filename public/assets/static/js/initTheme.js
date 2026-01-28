@@ -1,5 +1,3 @@
-const body = document.body;
-const theme = localStorage.getItem('theme')
+// Theme initialized by dark.js - no need for separate initialization
 
-if (theme) 
-  document.documentElement.setAttribute('data-bs-theme', theme)
+

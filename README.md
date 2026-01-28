@@ -1,6 +1,50 @@
-# Metinca Starter App
+# 🏭 METINCA Starter App
 
-Starter project Laravel untuk memulai development aplikasi baru dengan cepat.
+> **Enterprise Warehouse Management & Quality Control System**  
+> Version 2.0 | Laravel 9.x | Production Ready ✅
+
+---
+
+## 🎯 Overview
+
+METINCA Starter App adalah sistem manajemen warehouse dan quality control terintegrasi dengan fitur approval workflow multi-level, tracking stock movement, RCA analysis, dan finance approval.
+
+### ✨ Key Features
+
+- ✅ **Polymorphic Approval System** - Multi-level approval untuk semua modul
+- ✅ **Quality Inspection** - QC dengan auto-create Penyimpanan NG
+- ✅ **Stock Movement Tracking** - Complete audit trail IN/OUT/TRANSFER
+- ✅ **Retur Barang** - Return management dengan approval
+- ✅ **RCA Analysis** - 5 Why & Fishbone diagram
+- ✅ **Scrap Disposal** - Waste management dengan approval
+- ✅ **Finance Approval** - Budget tracking & approval workflow
+
+### 📊 Statistics
+
+- **41 Database Tables** (1.72 MB)
+- **15+ Models** with complete relationships
+- **12+ Controllers** ready to use
+- **8 Major Modules** implemented
+- **2,000+ Lines** of documentation
+
+---
+
+## 📚 Documentation
+
+**START HERE:** [📖 Documentation Index](./DOCUMENTATION_INDEX.md)
+
+### Quick Links
+
+| Document | Purpose | Best For |
+|----------|---------|----------|
+| [🚀 Quick Reference](./QUICK_REFERENCE.md) | Fast start guide | Developers |
+| [📘 Implementation Docs](./IMPLEMENTATION_DOCUMENTATION.md) | Complete reference | Tech Leads |
+| [🗺️ Database Diagrams](./DATABASE_RELATIONSHIPS.md) | Visual guide | Architects |
+| [✅ Summary](./IMPLEMENTATION_SUMMARY.md) | Executive overview | Managers |
+
+---
+
+## 🚀 Quick Start
 
 ## Persyaratan Sistem
 

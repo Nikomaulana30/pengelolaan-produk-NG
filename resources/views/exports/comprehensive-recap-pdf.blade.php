@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Comprehensive Recap Report</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Arial, sans-serif; 
+            font-size: 10px; 
+            line-height: 1.5; 
+            color: #333;
+        }
+        .page { page-break-after: always; padding: 20px; }
+        .header { 
+            text-align: center; 
+            margin-bottom: 25px; 
+            border-bottom: 3px solid #fa709a; 
+            padding-bottom: 15px;
+        }
+        .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .logo { font-weight: bold; font-size: 14px; color: #333; }
+        .title { font-size: 16px; font-weight: bold; color: #fa709a; }
+        .header-info { font-size: 9px; color: #666; margin-top: 8px; }
+        .header-info p { margin: 2px 0; }
+        
+        .stats-container { 
+            display: grid; 
+            grid-template-columns: repeat(5, 1fr); 
+            gap: 6px; 
+            margin-bottom: 20px;
+            height: 0;
+            overflow: hidden;
+            visibility: hidden;
+        }
+        .stat-card { 
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            padding: 10px; 
+            border-radius: 6px;
+            color: white;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .stat-value { font-size: 18px; font-weight: bold; display: block; }
+        .stat-label { font-size: 7px; margin-top: 3px; opacity: 0.9; }
+        
+        .section-title { 
+            background: #fa709a; 
+            color: white;
+            padding: 6px 10px; 
+            margin: 15px 0 8px 0; 
+            font-weight: bold; 
+            border-radius: 4px;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+        
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-bottom: 10px;
+            background: white;
+            border: 1px solid #ddd;
+            font-size: 8px;
+        }
+        th { 
+            background: #fa709a; 
+            color: white;
+            padding: 6px 8px; 
+            text-align: left; 
+            font-weight: bold; 
+            font-size: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.2px;
+        }
+        td { 
+            padding: 5px 8px; 
+            border-bottom: 1px solid #eee;
+            font-size: 8px;
+        }
+        tr:nth-child(even) { background: #f9f9f9; }
+        
+        .badge { 
+            display: inline-block; 
+            padding: 2px 5px; 
+            border-radius: 10px; 
+            font-size: 7px; 
+            font-weight: bold; 
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 0.2px;
+        }
+        .badge-ok { background: #28a745; }
+        .badge-ng { background: #dc3545; }
+        .badge-rework { background: #ff9800; }
+        .badge-success { background: #28a745; }
+        .badge-warning { background: #ffc107; color: #333; }
+        .badge-danger { background: #dc3545; }
+        .badge-approved { background: #28a745; }
+        .badge-pending { background: #ffc107; color: #333; }
+        
+        .empty-state { 
+            text-align: center; 
+            padding: 10px; 
+            color: #999;
+            font-style: italic;
+            background: #f5f5f5;
+            border-radius: 4px;
+            font-size: 8px;
+        }
+        
+        .footer { 
+            margin-top: 25px; 
+            text-align: center; 
+            font-size: 7px; 
+            color: #999; 
+            border-top: 1px solid #ddd; 
+            padding-top: 10px;
+            line-height: 1.5;
+        }
+
+        .module-section {
+            margin-bottom: 15px;
+            page-break-inside: avoid;
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-top">
+                <div class="logo">🏭 METINCA</div>
+                <div class="title">COMPREHENSIVE RECAP REPORT</div>
+                <div style="font-size: 12px; color: #fa709a; font-weight: bold;">ALL</div>
+            </div>
+            <div class="header-info">
+                <p><strong>Period:</strong> {{ $startDate->format('d M Y') }} - {{ $endDate->format('d M Y') }}</p>
+                <p><strong>Generated:</strong> {{ now()->format('d M Y H:i:s') }} | <strong>Document:</strong> COMP-{{ now()->format('Ymd-His') }}</p>
+            </div>
+        </div>
+
+        <!-- Summary Statistics -->
+        <div class="stats-container">
+            <div class="stat-card">
+                <span class="stat-value">{{ $rcaAnalysis->count() }}</span>
+                <span class="stat-label">RCA</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value">{{ $qualityInspections->count() }}</span>
+                <span class="stat-label">QA</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value">{{ $penerimaanBarang->count() }}</span>
+                <span class="stat-label">RECEIPT</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value">{{ $returBarang->count() }}</span>
+                <span class="stat-label">RETURN</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value">{{ $scrapDisposal->count() }}</span>
+                <span class="stat-label">SCRAP</span>
+            </div>
+        </div>
+
+        <!-- PPIC Section -->
+        <div class="module-section">
+            <div class="section-title">📊 PPIC - RCA Analysis (Latest 5)</div>
+            @if($rcaAnalysis->count() > 0)
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 15%;">RCA No</th>
+                        <th style="width: 35%;">Root Cause</th>
+                        <th style="width: 25%;">Action</th>
+                        <th style="width: 15%;">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($rcaAnalysis->take(5) as $rca)
+                    <tr>
+                        <td><strong>{{ $rca->nomor_rca ?? '-' }}</strong></td>
+                        <td>{{ Str::limit($rca->penyebab_utama ?? '-', 40) }}</td>
+                        <td>{{ Str::limit($rca->action_item ?? '-', 25) }}</td>
+                        <td><span class="badge badge-{{ strtolower($rca->status_rca ?? 'open') }}">{{ ucfirst($rca->status_rca ?? 'open') }}</span></td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            @else
+            <div class="empty-state">No data</div>
+            @endif
+        </div>
+
+        <!-- QA Section -->
+        <div class="module-section">
+            <div class="section-title">✅ QA - Quality Inspections (Latest 5)</div>
+            @if($qualityInspections->count() > 0)
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 12%;">Date</th>
+                        <th style="width: 35%;">Product</th>
+                        <th style="width: 10%; text-align: center;">Qty</th>
+                        <th style="width: 13%; text-align: center;">Result</th>
+                        <th style="width: 18%;">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($qualityInspections->take(5) as $inspection)
+                    <tr>
+                        <td>{{ $inspection->tanggal_inspeksi?->format('d/m') ?? '-' }}</td>
+                        <td>{{ Str::limit($inspection->produk->nama_produk ?? '-', 40) }}</td>
+                        <td style="text-align: center;">{{ $inspection->jumlah_produk ?? 0 }}</td>
+                        <td style="text-align: center;"><span class="badge badge-{{ strtolower($inspection->hasil ?? 'pending') }}">{{ strtoupper(substr($inspection->hasil ?? '-', 0, 2)) }}</span></td>
+                        <td><span class="badge badge-{{ strtolower($inspection->status ?? 'draft') }}">{{ ucfirst($inspection->status ?? 'draft') }}</span></td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            @else
+            <div class="empty-state">No data</div>
+            @endif
+        </div>
+
+        <!-- Warehouse Section -->
+        <div class="module-section">
+            <div class="section-title">📦 Warehouse - Movements Summary</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 20%;">Type</th>
+                        <th style="width: 20%; text-align: center;">Count</th>
+                        <th style="width: 30%;">Latest Entry</th>
+                        <th style="width: 15%;">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>📥 Goods Receipt</td>
+                        <td style="text-align: center;"><strong>{{ $penerimaanBarang->count() }}</strong></td>
+                        <td>{{ $penerimaanBarang->sortByDesc('tanggal_input')->first()?->tanggal_input?->format('d/m/Y') ?? '-' }}</td>
+                        <td><span class="badge badge-success">Active</span></td>
+                    </tr>
+                    <tr>
+                        <td>↩️ Returned Goods</td>
+                        <td style="text-align: center;"><strong>{{ $returBarang->count() }}</strong></td>
+                        <td>{{ $returBarang->sortByDesc('tanggal_retur')->first()?->tanggal_retur?->format('d/m/Y') ?? '-' }}</td>
+                        <td><span class="badge badge-warning">Pending</span></td>
+                    </tr>
+                    <tr>
+                        <td>🏭 NG Storage</td>
+                        <td style="text-align: center;"><strong>{{ $penyimpanan->count() }}</strong></td>
+                        <td>{{ $penyimpanan->sortByDesc('tanggal_penyimpanan')->first()?->tanggal_penyimpanan?->format('d/m/Y') ?? '-' }}</td>
+                        <td><span class="badge badge-danger">Storage</span></td>
+                    </tr>
+                    <tr>
+                        <td>♻️ Scrap/Disposal</td>
+                        <td style="text-align: center;"><strong>{{ $scrapDisposal->count() }}</strong></td>
+                        <td>{{ $scrapDisposal->sortByDesc('tanggal_scrap')->first()?->tanggal_scrap?->format('d/m/Y') ?? '-' }}</td>
+                        <td><span class="badge badge-approved">Complete</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>This is an official consolidated document generated by Metinca Management System</p>
+            <p>© {{ now()->year }} Metinca - All Rights Reserved | Confidential</p>
+            <p style="margin-top: 5px; font-size: 6px;">Document ID: {{ md5($startDate . $endDate . 'comprehensive') }}</p>
+        </div>
+    </div>
+</body>
+</html>
