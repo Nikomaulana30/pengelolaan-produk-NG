@@ -58,38 +58,8 @@
                     </a>
                 </li>
 
-                <!-- MASTER DATA -->
-                <li class="sidebar-title">Master Data</li>
-                <li class="sidebar-item {{ request()->routeIs('master-lokasi-gudang.*') ? 'active' : '' }}">
-                    <a href="{{ route('master-lokasi-gudang.index') }}" class='sidebar-link'>
-                        <i class="bi bi-geo-alt text-info"></i>
-                        <span>Master Lokasi Gudang</span>
-                    </a>
-                </li>
-
-                <!-- CUSTOMER RETURN: WAREHOUSE -->
-                <li class="sidebar-title">Customer Return</li>
-                <li class="sidebar-item has-sub {{ request()->routeIs('dokumen-retur.*') ? 'active' : '' }}">
-                    <a href="#" class='sidebar-link'>
-                        <i class="bi bi-file-earmark-text text-info"></i>
-                        <span>Dokumen Retur</span>
-                    </a>
-                    <ul class="submenu">
-                        <li class="submenu-item {{ request()->routeIs('dokumen-retur.index') ? 'active' : '' }}">
-                            <a href="{{ route('dokumen-retur.index') }}" class="submenu-link">
-                                <i class="bi bi-inbox me-2"></i>Incoming Returns
-                            </a>
-                        </li>
-                        <li class="submenu-item {{ request()->routeIs('dokumen-retur.create') ? 'active' : '' }}">
-                            <a href="{{ route('dokumen-retur.create') }}" class="submenu-link">
-                                <i class="bi bi-plus-circle me-2"></i>Create Document
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <!-- VERIFICATION PROCESS -->
-                <li class="sidebar-title">Verification Process</li>
+                <!-- WAREHOUSE OPERATIONS -->
+                <li class="sidebar-title">Warehouse Operations</li>
                 <li class="sidebar-item has-sub {{ request()->routeIs('warehouse-verification.*') ? 'active' : '' }}">
                     <a href="#" class='sidebar-link'>
                         <i class="bi bi-clipboard-check text-warning"></i>
@@ -126,15 +96,6 @@
                             </a>
                         </li>
                     </ul>
-                </li>
-
-                <!-- WAREHOUSE INVENTORY -->
-                <li class="sidebar-title">Warehouse Management</li>
-                <li class="sidebar-item">
-                    <a href="#" class='sidebar-link'>
-                        <i class="bi bi-boxes text-warning"></i>
-                        <span>Inventory NG</span>
-                    </a>
                 </li>
 
                 <!-- USER PROFILE & LOGOUT SECTION -->

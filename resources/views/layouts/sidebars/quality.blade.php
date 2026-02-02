@@ -58,32 +58,11 @@
                     </a>
                 </li>
 
-                <!-- MASTER DATA -->
-                <li class="sidebar-title">Master Data</li>
-                <li class="sidebar-item {{ request()->routeIs('master-defect.*') ? 'active' : '' }}">
-                    <a href="{{ route('master-defect.index') }}" class='sidebar-link'>
-                        <i class="bi bi-exclamation-triangle text-info"></i>
-                        <span>Master Defect</span>
-                    </a>
-                </li>
-                <li class="sidebar-item {{ request()->routeIs('master-disposisi.*') ? 'active' : '' }}">
-                    <a href="{{ route('master-disposisi.index') }}" class='sidebar-link'>
-                        <i class="bi bi-arrow-left-right text-info"></i>
-                        <span>Master Disposisi</span>
-                    </a>
-                </li>
-                <li class="sidebar-item {{ request()->routeIs('master-vendor.*') ? 'active' : '' }}">
-                    <a href="{{ route('master-vendor.index') }}" class='sidebar-link'>
-                        <i class="bi bi-building text-info"></i>
-                        <span>Master Vendor</span>
-                    </a>
-                </li>
-
-                <!-- CUSTOMER RETURN: QUALITY -->
+                <!-- QUALITY WORKFLOW -->
                 <li class="sidebar-title">Customer Return</li>
                 <li class="sidebar-item has-sub {{ request()->routeIs('quality-reinspection.*') ? 'active' : '' }}">
                     <a href="#" class='sidebar-link'>
-                        <i class="bi bi-search text-primary"></i>
+                        <i class="bi bi-search text-warning"></i>
                         <span>Quality Reinspection</span>
                     </a>
                     <ul class="submenu">
@@ -99,39 +78,6 @@
                         </li>
                     </ul>
                 </li>
-
-                <!-- Quality Reports -->
-                <li class="sidebar-title">Reports</li>
-                <li class="sidebar-item has-sub">
-                    <a href="#" class='sidebar-link'>
-                        <i class="bi bi-bar-chart text-info"></i>
-                        <span>Quality Reports</span>
-                    </a>
-                    <ul class="submenu">
-                        <li class="submenu-item">
-                            <a href="#" class="submenu-link">
-                                <i class="bi bi-graph-up me-2"></i>Defect Analysis
-                            </a>
-                        </li>
-                        <li class="submenu-item">
-                            <a href="#" class="submenu-link">
-                                <i class="bi bi-file-text me-2"></i>RCA Summary
-                            </a>
-                        </li>
-                        <li class="submenu-item">
-                            <a href="#" class="submenu-link">
-                                <i class="bi bi-trending-up me-2"></i>Quality Trends
-                            </a>
-                        </li>
-                        <li class="submenu-item">
-                            <a href="#" class="submenu-link">
-                                <i class="bi bi-award me-2"></i>Supplier Scorecard
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-
 
                 <!-- USER PROFILE & LOGOUT SECTION -->
                 <li class="sidebar-title mt-3">Account</li>

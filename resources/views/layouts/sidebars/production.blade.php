@@ -58,16 +58,7 @@
                     </a>
                 </li>
 
-                <!-- MASTER DATA -->
-                <li class="sidebar-title">Master Data</li>
-                <li class="sidebar-item {{ request()->routeIs('master-produk.*') ? 'active' : '' }}">
-                    <a href="{{ route('master-produk.index') }}" class='sidebar-link'>
-                        <i class="bi bi-box text-info"></i>
-                        <span>Master Produk</span>
-                    </a>
-                </li>
-
-                <!-- CUSTOMER RETURN: PRODUCTION -->
+                <!-- PRODUCTION WORKFLOW -->
                 <li class="sidebar-title">Customer Return</li>
                 <li class="sidebar-item has-sub {{ request()->routeIs('production-rework.*') ? 'active' : '' }}">
                     <a href="#" class='sidebar-link'>
@@ -86,72 +77,6 @@
                             </a>
                         </li>
                     </ul>
-                </li>
-
-                <!-- Rework Methods -->
-                <li class="sidebar-title">Rework Processes</li>
-                <li class="sidebar-item has-sub">
-                    <a href="#" class='sidebar-link'>
-                        <i class="bi bi-tools text-danger"></i>
-                        <span>Rework Methods</span>
-                    </a>
-                    <ul class="submenu">
-                        <li class="submenu-item">
-                            <a href="#" class="submenu-link">
-                                <i class="bi bi-fire me-2"></i>Melting Process
-                            </a>
-                        </li>
-                        <li class="submenu-item">
-                            <a href="#" class="submenu-link">
-                                <i class="bi bi-lightning me-2"></i>Welding Process
-                            </a>
-                        </li>
-                        <li class="submenu-item">
-                            <a href="#" class="submenu-link">
-                                <i class="bi bi-cpu me-2"></i>Machining Process
-                            </a>
-                        </li>
-                        <li class="submenu-item">
-                            <a href="#" class="submenu-link">
-                                <i class="bi bi-brush me-2"></i>Surface Treatment
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <!-- Production Reports -->
-                <li class="sidebar-title">Reports</li>
-                <li class="sidebar-item has-sub">
-                    <a href="#" class='sidebar-link'>
-                        <i class="bi bi-graph-up text-success"></i>
-                        <span>Production Reports</span>
-                    </a>
-                    <ul class="submenu">
-                        <li class="submenu-item">
-                            <a href="#" class="submenu-link">
-                                <i class="bi bi-speedometer2 me-2"></i>Rework Efficiency
-                            </a>
-                        </li>
-                        <li class="submenu-item">
-                            <a href="#" class="submenu-link">
-                                <i class="bi bi-currency-dollar me-2"></i>Cost Analysis
-                            </a>
-                        </li>
-                        <li class="submenu-item">
-                            <a href="#" class="submenu-link">
-                                <i class="bi bi-bar-chart me-2"></i>Capacity Planning
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <!-- PRODUCTION LINE MANAGEMENT -->
-                <li class="sidebar-title">Line Management</li>
-                <li class="sidebar-item">
-                    <a href="#" class='sidebar-link'>
-                        <i class="bi bi-diagram-3 text-warning"></i>
-                        <span>Production Line</span>
-                    </a>
                 </li>
 
                 <!-- USER PROFILE & LOGOUT SECTION -->

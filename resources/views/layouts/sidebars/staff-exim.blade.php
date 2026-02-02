@@ -89,59 +89,20 @@
                 </li>
 
                 <li class="sidebar-title">Final Decision</li>
-                <li class="sidebar-item has-sub {{ request()->routeIs('final-quality-check.*') ? 'active' : '' }}">
-                    <a href="#" class='sidebar-link'>
+                <li class="sidebar-item {{ request()->routeIs('final-quality-check.index') ? 'active' : '' }}">
+                    <a href="{{ route('final-quality-check.index') }}" class='sidebar-link'>
                         <i class="bi bi-shield-check text-success"></i>
                         <span>Final Quality Check</span>
                     </a>
-                    <ul class="submenu">
-                        <li class="submenu-item {{ request()->routeIs('final-quality-check.index') ? 'active' : '' }}">
-                            <a href="{{ route('final-quality-check.index') }}" class="submenu-link">
-                                <i class="bi bi-list-check me-2"></i>Pending Approval
-                            </a>
-                        </li>
-                        <li class="submenu-item">
-                            <a href="#" class="submenu-link">
-                                <i class="bi bi-check-circle me-2"></i>Approved Items
-                            </a>
-                        </li>
-                        <li class="submenu-item">
-                            <a href="#" class="submenu-link">
-                                <i class="bi bi-x-circle me-2"></i>Rejected Items
-                            </a>
-                        </li>
-                    </ul>
                 </li>
 
                 <!-- REPORTS & ANALYTICS -->
                 <li class="sidebar-title">Reports</li>
-                <li class="sidebar-item has-sub {{ request()->routeIs('return-reports.*') ? 'active' : '' }}">
-                    <a href="#" class='sidebar-link'>
+                <li class="sidebar-item {{ request()->routeIs('return-reports.index') ? 'active' : '' }}">
+                    <a href="{{ route('return-reports.index') }}" class='sidebar-link'>
                         <i class="bi bi-graph-up text-primary"></i>
                         <span>Export Import Reports</span>
                     </a>
-                    <ul class="submenu">
-                        <li class="submenu-item {{ request()->routeIs('return-reports.index') ? 'active' : '' }}">
-                            <a href="{{ route('return-reports.index') }}" class="submenu-link">
-                                <i class="bi bi-speedometer2 me-2"></i>Dashboard Analytics
-                            </a>
-                        </li>
-                        <li class="submenu-item">
-                            <a href="#" class="submenu-link">
-                                <i class="bi bi-people me-2"></i>Customer Reports
-                            </a>
-                        </li>
-                        <li class="submenu-item">
-                            <a href="#" class="submenu-link">
-                                <i class="bi bi-award me-2"></i>Performance KPI
-                            </a>
-                        </li>
-                        <li class="submenu-item">
-                            <a href="#" class="submenu-link">
-                                <i class="bi bi-download me-2"></i>Export Data
-                            </a>
-                        </li>
-                    </ul>
                 </li>
 
                 <!-- USER PROFILE & LOGOUT SECTION -->
