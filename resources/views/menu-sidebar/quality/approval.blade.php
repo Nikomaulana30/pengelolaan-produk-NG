@@ -40,7 +40,7 @@
                         <i class="bi bi-info-circle me-2"></i>
                         <strong>Informasi:</strong> Quality Approval digunakan untuk APPROVE inspection yang sudah dibuat. 
                         Jika belum ada inspection data, silakan 
-                        <a href="{{ route('inspeksi-qc.index') }}" class="alert-link">buat di menu Quality Inspection terlebih dahulu</a>.
+                        <a href="{{ route('quality-reinspection.index') }}" class="alert-link">buat di menu Quality Inspection terlebih dahulu</a>.
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
 

@@ -25,13 +25,15 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users|max:255',
             'password' => 'required|string|min:8|confirmed',
-            'role' => 'required|in:admin,ppic,warehouse,quality',
-            'is_active' => 'boolean',
+            'role' => 'required|in:admin,staff_exim,supervisor_warehouse,manager_quality,manager_production',
+            'is_active' => 'nullable|boolean',
         ]);
 
         // Hash password
         $validated['password'] = Hash::make($validated['password']);
-        $validated['is_active'] = $request->has('is_active');
+        
+        // Handle checkbox (checkbox doesn't send value when unchecked)
+        $validated['is_active'] = $request->has('is_active') ? 1 : 0;
 
         User::create($validated);
 
@@ -54,8 +56,8 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id . '|max:255',
             'password' => 'nullable|string|min:8|confirmed',
-            'role' => 'required|in:admin,ppic,warehouse,quality',
-            'is_active' => 'boolean',
+            'role' => 'required|in:admin,staff_exim,supervisor_warehouse,manager_quality,manager_production',
+            'is_active' => 'nullable|boolean',
         ]);
 
         // Hash password jika ada perubahan password
@@ -66,7 +68,8 @@ class UserController extends Controller
             unset($validated['password']);
         }
 
-        $validated['is_active'] = $request->has('is_active');
+        // Handle checkbox (checkbox doesn't send value when unchecked)
+        $validated['is_active'] = $request->has('is_active') ? 1 : 0;
 
         $user->update($validated);
 

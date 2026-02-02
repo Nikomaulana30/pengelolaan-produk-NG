@@ -13,10 +13,7 @@ class MasterLokasiGudangController extends Controller
     public function index(Request $request)
     {
         $query = MasterLokasiGudang::query()
-            ->withCount(['penyimpananNgs', 'penerimaanBarangs']) // Count items & penerimaan
-            ->with(['penyimpananNgs' => function($q) {
-                $q->select('master_lokasi_gudang_id', 'qty_sisa');
-            }]);
+            ->withCount(['penyimpananNgs']); // Count items only (penerimaanBarangs removed - model doesn't exist)
 
         // Search
         if ($request->has('search') && $request->search != '') {
@@ -64,7 +61,6 @@ class MasterLokasiGudangController extends Controller
             'bin' => 'required|string|max:50',
             'kapasitas_max' => 'required|integer|min:1',
             'deskripsi' => 'nullable|string',
-            'is_active' => 'boolean',
         ]);
 
         // Auto-generate lokasi_lengkap
@@ -72,12 +68,20 @@ class MasterLokasiGudangController extends Controller
                                        $validated['rack'] . '-' . 
                                        $validated['bin'];
         
-        $validated['is_active'] = $request->has('is_active');
+        $validated['is_active'] = $request->has('is_active') ? true : false;
 
-        MasterLokasiGudang::create($validated);
+        $lokasiGudang = MasterLokasiGudang::create($validated);
+
+        // Check if opened from popup (via warehouse verification)
+        if ($request->has('from_popup')) {
+            return redirect()
+                ->route('master-lokasi-gudang.show', $lokasiGudang)
+                ->with('success', 'Lokasi gudang berhasil ditambahkan!')
+                ->with('close_popup', true);
+        }
 
         return redirect()
-            ->route('master-lokasi-gudang.index')
+            ->route('master-lokasi-gudang.show', $lokasiGudang)
             ->with('success', 'Lokasi gudang berhasil ditambahkan!');
     }
 
@@ -94,10 +98,7 @@ class MasterLokasiGudangController extends Controller
             'penyimpananNgs.produk',
             'penyimpananNgs.defects',
             'penyimpananNgs.disposisi',
-            'penerimaanBarangs' => function($query) {
-                $query->orderBy('created_at', 'desc');
-            },
-            'penerimaanBarangs.user'
+            // penerimaanBarangs removed - PenerimaanBarang model doesn't exist
         ]);
 
         // Hitung statistik
@@ -110,12 +111,7 @@ class MasterLokasiGudangController extends Controller
             'status_breakdown' => $masterLokasiGudang->penyimpananNgs->groupBy('status_barang')->map->count(),
             'recent_additions' => $masterLokasiGudang->penyimpananNgs->take(10),
             'defect_summary' => $masterLokasiGudang->penyimpananNgs->pluck('defects')->flatten()->groupBy('nama_defect')->map->count()->sortDesc()->take(5),
-            // Penerimaan Barang statistics
-            'total_penerimaan' => $masterLokasiGudang->penerimaanBarangs->count(),
-            'penerimaan_recent' => $masterLokasiGudang->penerimaanBarangs->take(10),
-            'total_qty_diterima' => $masterLokasiGudang->penerimaanBarangs->sum(function($p) {
-                return $p->qty_baik + $p->qty_rusak;
-            }),
+            // Penerimaan Barang statistics removed - model doesn't exist
         ];
 
         return view('menu-sidebar.master-data.master-lokasi-gudang-show', compact('masterLokasiGudang', 'stats'));
@@ -142,7 +138,6 @@ class MasterLokasiGudangController extends Controller
             'bin' => 'required|string|max:50',
             'kapasitas_max' => 'required|integer|min:1',
             'deskripsi' => 'nullable|string',
-            'is_active' => 'boolean',
         ]);
 
         // Auto-generate lokasi_lengkap
@@ -150,12 +145,12 @@ class MasterLokasiGudangController extends Controller
                                        $validated['rack'] . '-' . 
                                        $validated['bin'];
         
-        $validated['is_active'] = $request->has('is_active');
+        $validated['is_active'] = $request->has('is_active') ? true : false;
 
         $masterLokasiGudang->update($validated);
 
         return redirect()
-            ->route('master-lokasi-gudang.index')
+            ->route('master-lokasi-gudang.show', $masterLokasiGudang)
             ->with('success', 'Lokasi gudang berhasil diupdate!');
     }
 

@@ -70,11 +70,12 @@ class PenyimpananNg extends Model
 
     /**
      * Relasi ke Penerimaan Barang (if linked)
+     * DISABLED: PenerimaanBarang model doesn't exist
      */
-    public function penerimaanBarang()
-    {
-        return $this->belongsTo(PenerimaanBarang::class, 'penerimaan_barang_id');
-    }
+    // public function penerimaanBarang()
+    // {
+    //     return $this->belongsTo(PenerimaanBarang::class, 'penerimaan_barang_id');
+    // }
 
     /**
      * Relasi ke Quality Inspection (reverse)

@@ -71,7 +71,7 @@
                     <h4 class="card-title">Form Inspeksi QC - Dimensi & Measurement</h4>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('inspeksi-qc.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('quality-reinspection.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         
                         {{-- Display Validation Errors --}}
@@ -551,13 +551,13 @@
                                         <div class="row mt-3">
                                             <div class="col-md-12">
                                                 <div class="d-flex gap-2">
-                                                    <a href="{{ route('inspeksi-qc.show', ['inspection' => $inspection->id]) }}" class="btn btn-sm btn-info">
+                                                    <a href="{{ route('quality-reinspection.show', ['inspection' => $inspection->id]) }}" class="btn btn-sm btn-info">
                                                         <i class="bi bi-eye"></i> Lihat Detail
                                                     </a>
-                                                    <a href="{{ route('inspeksi-qc.edit', ['inspection' => $inspection->id]) }}" class="btn btn-sm btn-warning">
+                                                    <a href="{{ route('quality-reinspection.edit', ['inspection' => $inspection->id]) }}" class="btn btn-sm btn-warning">
                                                         <i class="bi bi-pencil"></i> Edit
                                                     </a>
-                                                    <form action="{{ route('inspeksi-qc.destroy', ['inspection' => $inspection->id]) }}" method="POST" style="display:inline;">
+                                                    <form action="{{ route('quality-reinspection.destroy', ['inspection' => $inspection->id]) }}" method="POST" style="display:inline;">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus inspeksi ini?')">

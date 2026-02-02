@@ -39,8 +39,17 @@ class MasterLokasiGudang extends Model
     /**
      * Relasi ke Penerimaan Barang
      */
-    public function penerimaanBarangs()
+    // DISABLED: PenerimaanBarang model doesn't exist
+    // public function penerimaanBarangs()
+    // {
+    //     return $this->hasMany(PenerimaanBarang::class, 'master_lokasi_gudang_id');
+    // }
+
+    /**
+     * Relasi ke Warehouse Verification
+     */
+    public function warehouseVerifications()
     {
-        return $this->hasMany(PenerimaanBarang::class, 'master_lokasi_gudang_id');
+        return $this->hasMany(WarehouseVerification::class, 'master_lokasi_gudang_id');
     }
 }

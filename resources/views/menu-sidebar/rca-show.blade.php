@@ -16,7 +16,8 @@
                         <a href="{{ route('rca-analysis.edit', $rcaAnalysis) }}" class="btn btn-warning">
                             <i class="bi bi-pencil"></i> Edit
                         </a>
-                        <a href="{{ route('rca-analysis.index') }}" class="btn btn-outline-secondary">
+                        {{-- <a href="{{ route('rca-analysis.index') }}" class="btn btn-outline-secondary"> --}}
+                        <a href="#" class="btn btn-outline-secondary disabled">
                             <i class="bi bi-arrow-left"></i> Kembali
                         </a>
                     </div>

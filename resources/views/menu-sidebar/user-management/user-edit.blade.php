@@ -88,18 +88,20 @@
                                             id="role" name="role" required>
                                         <option value="">-- Pilih Role --</option>
                                         <option value="admin" @selected(old('role', $user->role) === 'admin')>🔴 Administrator</option>
-                                        <option value="ppic" @selected(old('role', $user->role) === 'ppic')>🔵 PPIC</option>
-                                        <option value="warehouse" @selected(old('role', $user->role) === 'warehouse')>🟢 Warehouse</option>
-                                        <option value="quality" @selected(old('role', $user->role) === 'quality')>🟡 Quality</option>
+                                        <option value="staff_exim" @selected(old('role', $user->role) === 'staff_exim')>🔵 Staff EXIM</option>
+                                        <option value="supervisor_warehouse" @selected(old('role', $user->role) === 'supervisor_warehouse')>🟢 Supervisor Warehouse</option>
+                                        <option value="manager_quality" @selected(old('role', $user->role) === 'manager_quality')>🟡 Manager Quality</option>
+                                        <option value="manager_production" @selected(old('role', $user->role) === 'manager_production')>🟠 Manager Production</option>
                                     </select>
                                     @error('role')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                     <small class="text-muted">
-                                        • Administrator: Akses penuh ke semua fitur<br>
-                                        • PPIC: RCA Analysis, Finance Approval<br>
-                                        • Warehouse: Penerimaan, Retur, Penyimpanan NG, Scrap<br>
-                                        • Quality: Inspeksi QC, Quality Approval
+                                        • <strong>Administrator:</strong> Akses penuh semua menu (Master Data, All Workflows, Reports, User Management)<br>
+                                        • <strong>Staff EXIM:</strong> Customer Complaint, Final Quality Check, Return Shipment, Export Reports<br>
+                                        • <strong>Supervisor Warehouse:</strong> Dokumen Retur, Warehouse Verification, Incoming, Racks to Ship<br>
+                                        • <strong>Manager Quality:</strong> Quality Reinspection, Scrap Disposal, Printing, Master Defect/Vendor<br>
+                                        • <strong>Manager Production:</strong> Production Rework, Rework Methods, Production Dashboard
                                     </small>
                                 </div>
 

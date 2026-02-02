@@ -27,7 +27,7 @@
             <div class="card shadow-lg">
                 <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
                     <h5 class="mb-0"><i class="bx bx-edit"></i> Edit Penerimaan Barang NG</h5>
-                    <a href="{{ route('penerimaan-barang.index') }}" class="btn btn-light btn-sm">Kembali</a>
+                    <a href="{{ route('dashboard') }}" class="btn btn-light btn-sm">Kembali</a>
                 </div>
                 <div class="card-body">
                     @if ($errors->any())

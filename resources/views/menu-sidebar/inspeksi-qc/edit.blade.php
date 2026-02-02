@@ -39,7 +39,7 @@
                     <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('inspeksi-qc.index') }}">Inspeksi QC</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('quality-reinspection.index') }}">Inspeksi QC</a></li>
                             <li class="breadcrumb-item active" aria-current="page">Edit</li>
                         </ol>
                     </nav>

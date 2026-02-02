@@ -9,8 +9,23 @@ class MasterDefectController extends Controller
 {
     public function index()
     {
-        $defects = MasterDefect::paginate(15);
-        return view('menu-sidebar.master-data.master-defect', compact('defects'));
+        $defects = MasterDefect::withCount([
+            'qualityReinspections'
+        ])->paginate(15);
+        
+        // Statistics
+        $totalDefect = MasterDefect::count();
+        $defectAktif = MasterDefect::where('is_active', true)->count();
+        $criticalDefect = MasterDefect::where('criticality_level', 'critical')->count();
+        $reworkable = MasterDefect::where('is_rework_possible', true)->count();
+        
+        return view('menu-sidebar.master-data.master-defect', compact(
+            'defects',
+            'totalDefect',
+            'defectAktif',
+            'criticalDefect',
+            'reworkable'
+        ));
     }
 
     public function create()
@@ -25,10 +40,15 @@ class MasterDefectController extends Controller
             'nama_defect' => 'required|max:255',
             'deskripsi' => 'nullable|string',
             'criticality_level' => 'required|in:minor,major,critical',
-            'sumber_masalah' => 'required|in:supplier,proses_produksi,handling_gudang,lainnya',
+            'sumber_masalah' => 'required|in:supplier,customer,proses_produksi,handling_gudang,lainnya',
             'solusi_standar' => 'nullable|string',
-            'is_rework_possible' => 'boolean',
+            'is_rework_possible' => 'required|in:0,1',
+            'is_active' => 'required|in:0,1',
         ]);
+
+        // Convert string to boolean for storage
+        $validated['is_rework_possible'] = (bool) $validated['is_rework_possible'];
+        $validated['is_active'] = (bool) $validated['is_active'];
 
         MasterDefect::create($validated);
 
@@ -51,7 +71,7 @@ class MasterDefectController extends Controller
             'nama_defect' => 'required|max:255',
             'deskripsi' => 'nullable|string',
             'criticality_level' => 'required|in:minor,major,critical',
-            'sumber_masalah' => 'required|in:supplier,proses_produksi,handling_gudang,lainnya',
+            'sumber_masalah' => 'required|in:supplier,customer,proses_produksi,handling_gudang,lainnya',
             'solusi_standar' => 'nullable|string',
             'is_rework_possible' => 'required|in:0,1',
             'is_active' => 'required|in:0,1',

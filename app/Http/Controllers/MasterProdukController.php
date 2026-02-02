@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\MasterProduk;
 use App\Models\MasterVendor;
+use App\Models\CustomerComplaint;
+use App\Models\ProductionRework;
 use Illuminate\Http\Request;
 
 class MasterProdukController extends Controller
@@ -11,7 +13,24 @@ class MasterProdukController extends Controller
     public function index()
     {
         $produks = MasterProduk::with('vendor')->paginate(15);
-        return view('menu-sidebar.master-data.master-produk', compact('produks'));
+        
+        // Dynamic statistics
+        $totalProduk = MasterProduk::count();
+        $produkAktif = MasterProduk::where('is_active', true)->count();
+        
+        // Count active complaints (status: pending, in_review, approved)
+        $complaintAktif = CustomerComplaint::whereIn('status', ['pending', 'in_review', 'approved'])->count();
+        
+        // Count active reworks (status: pending, in_progress)
+        $dalamRework = ProductionRework::whereIn('status', ['pending', 'in_progress'])->count();
+        
+        return view('menu-sidebar.master-data.master-produk', compact(
+            'produks',
+            'totalProduk',
+            'produkAktif',
+            'complaintAktif',
+            'dalamRework'
+        ));
     }
 
     public function create()
@@ -31,8 +50,11 @@ class MasterProdukController extends Controller
             'vendor_id' => 'nullable|exists:master_vendors,id',
             'spesifikasi' => 'nullable|string',
             'drawing_file' => 'nullable|string',
-            'is_active' => 'boolean',
+            'is_active' => 'nullable|boolean',
         ]);
+
+        // Handle checkbox is_active properly
+        $validated['is_active'] = $request->has('is_active') ? 1 : 0;
 
         MasterProduk::create($validated);
 
@@ -61,8 +83,11 @@ class MasterProdukController extends Controller
             'vendor_id' => 'nullable|exists:master_vendors,id',
             'spesifikasi' => 'nullable|string',
             'drawing_file' => 'nullable|string',
-            'is_active' => 'boolean',
+            'is_active' => 'nullable|boolean',
         ]);
+
+        // Handle checkbox is_active properly
+        $validated['is_active'] = $request->has('is_active') ? 1 : 0;
 
         $masterProduk->update($validated);
 

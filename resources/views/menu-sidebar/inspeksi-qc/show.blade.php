@@ -60,7 +60,7 @@
                     <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('inspeksi-qc.index') }}">Inspeksi QC</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('quality-reinspection.index') }}">Inspeksi QC</a></li>
                             <li class="breadcrumb-item active" aria-current="page">Detail</li>
                         </ol>
                     </nav>
@@ -81,7 +81,7 @@
                             <a href="{{ route('inspeksi-qc.edit', ['inspection' => $inspection->id]) }}" class="btn btn-warning btn-sm me-2">
                                 <i class="bi bi-pencil"></i> Edit
                             </a>
-                            <a href="{{ route('inspeksi-qc.index') }}" class="btn btn-secondary btn-sm">
+                            <a href="{{ route('quality-reinspection.index') }}" class="btn btn-secondary btn-sm">
                                 <i class="bi bi-arrow-left"></i> Kembali
                             </a>
                         </div>
@@ -193,7 +193,7 @@
                                         <i class="bi bi-trash"></i> Hapus
                                     </button>
                                 </form>
-                                <a href="{{ route('inspeksi-qc.index') }}" class="btn btn-secondary">
+                                <a href="{{ route('quality-reinspection.index') }}" class="btn btn-secondary">
                                     <i class="bi bi-arrow-left"></i> Kembali ke Daftar
                                 </a>
                             </div>

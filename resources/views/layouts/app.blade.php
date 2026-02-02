@@ -488,275 +488,62 @@
 
 <body data-bs-theme="{{ auth()->check() ? (auth()->user()->theme ?? 'light') : 'light' }}">
     <div id="app">
-        <div id="sidebar" data-bs-theme="{{ auth()->check() ? (auth()->user()->theme ?? 'light') : 'light' }}">
-            <div class="sidebar-wrapper active">
-                <div class="sidebar-header position-relative">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="logo">
-                            <a href="index.html"><img src="{{ asset('assets/compiled/jpg/logo metinca.jpg') }}" alt="Logo"
-                                    style="height: 70px; width: auto; margin-right: 12px;">
-                                <span style="font-size: 15px; font-weight: 600; color: #333;">
-                                    METINCA PRIMA INDUSTRIAL WORKS
-                                </span>
-                            </a>
-                        </div>
-                        <div class="theme-toggle d-flex gap-2 align-items-center mt-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                aria-hidden="true" role="img" class="iconify iconify--system-uicons" width="20"
-                                height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21">
-                                <g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <path
-                                        d="M10.5 14.5c2.219 0 4-1.763 4-3.982a4.003 4.003 0 0 0-4-4.018c-2.219 0-4 1.781-4 4c0 2.219 1.781 4 4 4zM4.136 4.136L5.55 5.55m9.9 9.9l1.414 1.414M1.5 10.5h2m14 0h2M4.135 16.863L5.55 15.45m9.899-9.9l1.414-1.415M10.5 19.5v-2m0-14v-2"
-                                        opacity=".3"></path>
-                                    <g transform="translate(-210 -1)">
-                                        <path d="M220.5 2.5v2m6.5.5l-1.5 1.5"></path>
-                                        <circle cx="220.5" cy="11.5" r="4"></circle>
-                                        <path d="m214 5l1.5 1.5m5 14v-2m6.5-.5l-1.5-1.5M214 18l1.5-1.5m-4-5h2m14 0h2">
-                                        </path>
-                                    </g>
-                                </g>
-                            </svg>
-                            <div class="form-check form-switch fs-6">
-                                <input class="form-check-input me-0" type="checkbox" id="toggle-dark"
-                                    style="cursor: pointer">
-                                <label class="form-check-label"></label>
+        {{-- DIVISION-SPECIFIC SIDEBARS --}}
+        @auth
+            @php
+                $userRole = auth()->user()->role;
+            @endphp
+
+            {{-- ADMIN: Full access to all features --}}
+            @if($userRole === 'admin')
+                @include('layouts.sidebars.admin')
+            {{-- EXPORT/IMPORT STAFF: Customer service & approval --}}
+            @elseif($userRole === 'staff_exim')
+                @include('layouts.sidebars.staff-exim')
+            {{-- WAREHOUSE SUPERVISOR: Documentation, verification & shipping --}}
+            @elseif($userRole === 'supervisor_warehouse')
+                @include('layouts.sidebars.warehouse')
+            {{-- QUALITY MANAGER: Quality control & inspection --}}
+            @elseif($userRole === 'manager_quality')
+                @include('layouts.sidebars.quality')
+            {{-- PRODUCTION MANAGER: Rework & production processes --}}
+            @elseif($userRole === 'manager_production')
+                @include('layouts.sidebars.production')
+            @else
+                {{-- DEFAULT SIDEBAR FOR UNKNOWN ROLES --}}
+                @include('layouts.sidebars.admin')
+            @endif
+        @else
+            {{-- GUEST/NOT LOGGED IN - MINIMAL SIDEBAR --}}
+            <div id="sidebar" class="active">
+                <div class="sidebar-wrapper active">
+                    <div class="sidebar-header position-relative">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="logo">
+                                <a href="{{ route('login') }}">
+                                    <img src="{{ asset('assets/compiled/jpg/logo metinca.jpg') }}" alt="Logo"
+                                            style="height: 70px; width: auto; margin-right: 12px;">
+                                    <span style="font-size: 15px; font-weight: 600; color: #333;">
+                                        PLEASE LOGIN
+                                    </span>
+                                </a>
                             </div>
-                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                aria-hidden="true" role="img" class="iconify iconify--mdi" width="20"
-                                height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
-                                <path fill="currentColor"
-                                    d="m17.75 4.09l-2.53 1.94l.91 3.06l-2.63-1.81l-2.63 1.81l.91-3.06l-2.53-1.94L12.44 4l1.06-3l1.06 3l3.19.09m3.5 6.91l-1.64 1.25l.59 1.98l-1.7-1.17l-1.7 1.17l.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95l2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85c-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14c.4-.4.82-.76 1.27-1.08c.75-.53 1.93.36 1.85 1.19c-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82c-2.81 3.14-2.7 7.96.31 10.98c3.02 3.01 7.84 3.12 10.98.31Z">
-                                </path>
-                            </svg>
-                        </div>
-                        <div class="sidebar-toggler  x">
-                            <a href="#" class="sidebar-hide d-xl-none d-block"><i
-                                    class="bi bi-x bi-middle"></i></a>
                         </div>
                     </div>
-                </div>
-                <div class="sidebar-menu">
-                    <ul class="menu">
-                        <li class="sidebar-title">Menu</li>
-
-                        <li class="sidebar-item {{ request()->routeIs('dashboard') ? 'active' : '' }} ">
-                            <a href="{{ route('dashboard') }}" class='sidebar-link'>
-                                <i class="bi bi-grid-fill"></i>
-                                <span>Dashboard</span>
-                            </a>
-                        </li>
-
-                        <li class="sidebar-title">Data Management</li>
-
-                        <!-- ============ DATA MASTER MENU (Admin Only) ============ -->
-                        @if(auth()->user()->canAccess('master-data'))
-                        <li class="sidebar-item has-sub {{ request()->routeIs('master-produk.*', 'master-defect.*', 'master-lokasi.*', 'master-vendor.*', 'master-disposisi.*', 'master-approval.*') ? 'active' : '' }}">
-                            <a href="#" class='sidebar-link'>
-                                <i class="bi bi-database-fill"></i>
-                                <span>DATA MASTER</span>
-                            </a>
-                            <ul class="submenu">
-                                <li class="submenu-item {{ request()->routeIs('master-produk.*') ? 'active' : '' }}">
-                                    <a href="{{ route('master-produk.index') }}">
-                                        <i class="bi bi-box2 me-2"></i>Master Produk
-                                    </a>
-                                </li>
-                                <li class="submenu-item {{ request()->routeIs('master-defect.*') ? 'active' : '' }}">
-                                    <a href="{{ route('master-defect.index') }}">
-                                        <i class="bi bi-exclamation-triangle me-2"></i>Master Defect
-                                    </a>
-                                </li>
-                                <li class="submenu-item {{ request()->routeIs('master-lokasi.*') ? 'active' : '' }}">
-                                    <a href="{{ route('master-lokasi.index') }}">
-                                        <i class="bi bi-geo-alt me-2"></i>Master Lokasi Gudang
-                                    </a>
-                                </li>
-                                <li class="submenu-item {{ request()->routeIs('master-vendor.*') ? 'active' : '' }}">
-                                    <a href="{{ route('master-vendor.index') }}">
-                                        <i class="bi bi-building me-2"></i>Master Vendor/Supplier
-                                    </a>
-                                </li>
-                                <li class="submenu-item {{ request()->routeIs('master-disposisi.*') ? 'active' : '' }}">
-                                    <a href="{{ route('master-disposisi.index') }}">
-                                        <i class="bi bi-arrow-left-right me-2"></i>Master Disposisi
-                                    </a>
-                                </li>
-                                <li class="submenu-item {{ request()->routeIs('master-approval.*') ? 'active' : '' }}">
-                                    <a href="{{ route('master-approval.index') }}">
-                                        <i class="bi bi-person-check me-2"></i>Master Approval Authority
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        @endif
-
-                        <!-- ============ PPIC MENU ============ -->
-                        @if(auth()->user()->canAccess('ppic'))
-                        <li class="sidebar-item has-sub {{ request()->routeIs('rca-analysis.*', 'ppic.approval.*') ? 'active' : '' }}">
-                            <a href="#" class='sidebar-link'>
-                                <i class="bi bi-diagram-3-fill"></i>
-                                <span>PPIC</span>
-                            </a>
-                            <ul class="submenu">
-                                <li class="submenu-item {{ request()->routeIs('rca-analysis.*') ? 'active' : '' }}">
-                                    <a href="{{ route('rca-analysis.index') }}">
-                                        <i class="bi bi-diagram-3 me-2"></i>RCA Analysis
-                                    </a>
-                                </li>
-                                <li class="submenu-item {{ request()->routeIs('ppic.approval.*') ? 'active' : '' }}">
-                                    <a href="{{ route('ppic.approval.index') }}">
-                                        <i class="bi bi-file-earmark-check me-2"></i>Approval (Finance)
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        @endif
-
-                        <!-- ============ WAREHOUSE MENU ============ -->
-                        @if(auth()->user()->canAccess('warehouse'))
-                        <li class="sidebar-item has-sub {{ request()->routeIs('penerimaan-barang.*', 'retur-barang.*', 'penyimpanan-ng.*', 'scrap-disposal.*', 'warehouse.approval.*') ? 'active' : '' }}">
-                            <a href="#" class='sidebar-link'>
-                                <i class="bi bi-shop-window"></i>
-                                <span>WAREHOUSE</span>
-                            </a>
-                            <ul class="submenu">
-                                <li class="submenu-item {{ request()->routeIs('penerimaan-barang.*') ? 'active' : '' }}">
-                                    <a href="{{ route('penerimaan-barang.index') }}">
-                                        <i class="bi bi-box-arrow-in-down me-2"></i>Penerimaan Barang
-                                    </a>
-                                </li>
-                                <li class="submenu-item {{ request()->routeIs('retur-barang.*') ? 'active' : '' }}">
-                                    <a href="{{ route('retur-barang.index') }}">
-                                        <i class="bi bi-arrow-left-square me-2"></i>Retur Barang
-                                    </a>
-                                </li>
-                                <li class="submenu-item {{ request()->routeIs('penyimpanan-ng.*') ? 'active' : '' }}">
-                                    <a href="{{ route('penyimpanan-ng.index') }}">
-                                        <i class="bi bi-archive me-2"></i>Penyimpanan NG
-                                    </a>
-                                </li>
-                                <li class="submenu-item {{ request()->routeIs('disposisi-assignment.*') ? 'active' : '' }}">
-                                    <a href="{{ route('disposisi-assignment.index') }}">
-                                        <i class="bi bi-diagram-3 me-2"></i>Disposisi Assignment
-                                    </a>
-                                </li>
-                                <li class="submenu-item {{ request()->routeIs('scrap-disposal.*') ? 'active' : '' }}">
-                                    <a href="{{ route('scrap-disposal.index') }}">
-                                        <i class="bi bi-trash me-2"></i>Scrap/Disposal
-                                    </a>
-                                </li>
-                                <li class="submenu-item {{ request()->routeIs('warehouse.approval.*') ? 'active' : '' }}">
-                                    <a href="{{ route('warehouse.approval.index') }}">
-                                        <i class="bi bi-file-earmark-check me-2"></i>Approval
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        @endif
-
-                        <!-- ============ QUALITY MENU ============ -->
-                        @if(auth()->user()->canAccess('quality'))
-                        <li class="sidebar-item has-sub {{ request()->routeIs('inspeksi-qc.*', 'quality.approval.*') ? 'active' : '' }}">
-                            <a href="#" class='sidebar-link'>
-                                <i class="bi bi-shield-check"></i>
-                                <span>QUALITY</span>
-                            </a>
-                            <ul class="submenu">
-                                <li class="submenu-item {{ request()->routeIs('inspeksi-qc.*') ? 'active' : '' }}">
-                                    <a href="{{ route('inspeksi-qc.index') }}">
-                                        <i class="bi bi-search me-2"></i>Inspeksi/QC
-                                    </a>
-                                </li>
-                                <li class="submenu-item {{ request()->routeIs('quality.approval.*') ? 'active' : '' }}">
-                                    <a href="{{ route('quality.approval.index') }}">
-                                        <i class="bi bi-check-circle me-2"></i>Approval
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        @endif
-
-                        <!-- ============ REPORTS MENU ============ -->
-                        @if(auth()->user()->canAccess('reports'))
-                        <li class="sidebar-item has-sub {{ request()->routeIs('reports.*', 'vendor-scorecard.*', 'laporan-recap.*') ? 'active' : '' }}">
-                            <a href="#" class='sidebar-link'>
-                                <i class="bi bi-file-earmark-bar-graph"></i>
-                                <span>REPORTS</span>
-                            </a>
-                            <ul class="submenu">
-                                <li class="submenu-item {{ request()->routeIs('laporan-recap.*') ? 'active' : '' }}">
-                                    <a href="{{ route('laporan-recap.index') }}">
-                                        <i class="bi bi-file-earmark-text me-2"></i>Laporan Recap PPIC
-                                    </a>
-                                </li>
-                                <li class="submenu-item {{ request()->routeIs('reports.return-analysis') ? 'active' : '' }}">
-                                    <a href="{{ route('reports.return-analysis') }}">
-                                        <i class="bi bi-graph-up-arrow me-2"></i>Return Analysis
-                                    </a>
-                                </li>
-                                <li class="submenu-item {{ request()->routeIs('vendor-scorecard.*') ? 'active' : '' }}">
-                                    <a href="{{ route('vendor-scorecard.index') }}">
-                                        <i class="bi bi-graph-up me-2"></i>Vendor Scorecard
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        @endif
-
-                        <!-- ============ USER MANAGEMENT MENU (Admin Only) ============ -->
-                        @if(auth()->user()->canAccess('user-management'))
-                        <li class="sidebar-item has-sub {{ request()->routeIs('user.*') ? 'active' : '' }}">
-                            <a href="#" class='sidebar-link'>
-                                <i class="bi bi-people-fill"></i>
-                                <span>USER MANAGEMENT</span>
-                            </a>
-                            <ul class="submenu">
-                                <li class="submenu-item {{ request()->routeIs('user.index') ? 'active' : '' }}">
-                                    <a href="{{ route('user.index') }}">
-                                        <i class="bi bi-person-lines-fill me-2"></i>Manajemen User
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        @endif
-
-                        <!-- ============ LOGOUT SECTION ============ -->
-                        <li class="sidebar-title mt-3">Account</li>
-                        <li class="sidebar-item">
-                            <div class="sidebar-link d-flex align-items-center p-3 mx-2 mb-2" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 8px;">
-                                @if(auth()->user()->avatar)
-                                    <img src="{{ asset('storage/' . auth()->user()->avatar) }}?t={{ time() }}" 
-                                         alt="{{ auth()->user()->name }}"
-                                         class="me-3 rounded-circle"
-                                         style="width: 44px; height: 44px; object-fit: cover;">
-                                @else
-                                    <div class="me-3 bg-{{ auth()->user()->getRoleBadgeColor() }}" style="width: 44px; height: 44px; border-radius: 50%; display: flex; justify-content: center; align-items: center;">
-                                        <span class="text-white" style="font-weight: 600; font-size: 15px; margin: 0; padding: 0; display: block; text-align: center;">{{ strtoupper(substr(auth()->user()->name, 0, 2)) }}</span>
-                                    </div>
-                                @endif
-                                <div class="flex-grow-1">
-                                    <h6 class="mb-0 text-dark" style="font-size: 13px;">{{ auth()->user()->name }}</h6>
-                                    <span class="badge bg-{{ auth()->user()->getRoleBadgeColor() }}" style="font-size: 10px;">
-                                        {{ auth()->user()->getRoleDisplayName() }}
-                                    </span>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="sidebar-item">
-                            <form id="sidebar-logout-form" action="{{ route('logout') }}" method="POST">
-                                @csrf
-                                <button type="submit" class="sidebar-link btn btn-link text-danger w-100 text-start" style="text-decoration: none;">
-                                    <i class="bi bi-box-arrow-left"></i>
-                                    <span>Logout</span>
-                                </button>
-                            </form>
-                        </li>
-
-                    </ul>
+                    <div class="sidebar-menu">
+                        <ul class="menu">
+                            <li class="sidebar-item">
+                                <a href="{{ route('login') }}" class='sidebar-link'>
+                                    <i class="bi bi-box-arrow-in-right"></i>
+                                    <span>Login</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
+        @endauth
+
         <div id="main" data-bs-theme="{{ auth()->check() ? (auth()->user()->theme ?? 'light') : 'light' }}">
             <header>
                 <nav class="navbar navbar-expand navbar-light navbar-top">

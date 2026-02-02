@@ -406,116 +406,18 @@
         </div>
         @endif
 
-        <!-- Penerimaan Barang di Lokasi Ini -->
+        <!-- PENERIMAAN BARANG SECTION - DISABLED (Model doesn't exist) -->
         <div class="card">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <h4 class="card-title mb-0">📥 Penerimaan Barang di Lokasi Ini</h4>
-                <div>
-                    <span class="badge bg-success me-2">{{ $stats['total_penerimaan'] }} penerimaan</span>
-                    <span class="badge bg-info">{{ number_format($stats['total_qty_diterima']) }} total qty</span>
-                </div>
+            <div class="card-header d-flex justify-content-between align-items-center bg-light">
+                <h4 class="card-title mb-0 text-muted">📥 Penerimaan Barang di Lokasi Ini</h4>
+                <span class="badge bg-secondary">Coming Soon</span>
             </div>
             <div class="card-body">
-                @if($masterLokasiGudang->penerimaanBarangs->count() > 0)
-                    <div class="table-responsive">
-                        <table class="table table-hover table-striped">
-                            <thead>
-                                <tr>
-                                    <th>No. Dokumen</th>
-                                    <th>Tanggal</th>
-                                    <th>Jenis</th>
-                                    <th>Nama Barang</th>
-                                    <th>Qty Baik</th>
-                                    <th>Qty Rusak</th>
-                                    <th>Status Penerimaan</th>
-                                    <th>Ada Defect?</th>
-                                    <th>Penginput</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($stats['penerimaan_recent'] as $penerimaan)
-                                <tr>
-                                    <td>
-                                        <a href="{{ route('penerimaan-barang.show', $penerimaan->id) }}" class="text-primary fw-bold">
-                                            {{ $penerimaan->nomor_dokumen }}
-                                        </a>
-                                    </td>
-                                    <td>{{ $penerimaan->tanggal_input->format('d M Y H:i') }}</td>
-                                    <td>
-                                        @php
-                                            $jenisClass = match($penerimaan->jenis_pengembalian) {
-                                                'internal' => 'bg-info',
-                                                'customer_return' => 'bg-warning',
-                                                'supplier' => 'bg-primary',
-                                                default => 'bg-secondary'
-                                            };
-                                        @endphp
-                                        <span class="badge {{ $jenisClass }}">
-                                            {{ ucfirst(str_replace('_', ' ', $penerimaan->jenis_pengembalian)) }}
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <strong>{{ $penerimaan->nama_barang }}</strong>
-                                        @if($penerimaan->sku)
-                                            <br><small class="text-muted">SKU: {{ $penerimaan->sku }}</small>
-                                        @endif
-                                    </td>
-                                    <td><span class="badge bg-success">{{ number_format($penerimaan->qty_baik) }}</span></td>
-                                    <td><span class="badge bg-danger">{{ number_format($penerimaan->qty_rusak) }}</span></td>
-                                    <td>
-                                        @php
-                                            $statusClass = match($penerimaan->status_penerimaan ?? 'diterima') {
-                                                'diterima' => 'bg-primary',
-                                                'sedang_inspeksi' => 'bg-warning',
-                                                'selesai_inspeksi' => 'bg-info',
-                                                'disimpan' => 'bg-success',
-                                                'ditolak' => 'bg-danger',
-                                                default => 'bg-secondary'
-                                            };
-                                        @endphp
-                                        <span class="badge {{ $statusClass }}">
-                                            {{ ucfirst(str_replace('_', ' ', $penerimaan->status_penerimaan ?? 'diterima')) }}
-                                        </span>
-                                    </td>
-                                    <td>
-                                        @if($penerimaan->ada_defect)
-                                            <span class="badge bg-danger">
-                                                <i class="bi bi-exclamation-triangle"></i> Ya
-                                            </span>
-                                        @else
-                                            <span class="badge bg-success">
-                                                <i class="bi bi-check-circle"></i> Tidak
-                                            </span>
-                                        @endif
-                                    </td>
-                                    <td>{{ $penerimaan->penginput }}</td>
-                                    <td>
-                                        <a href="{{ route('penerimaan-barang.show', $penerimaan->id) }}" 
-                                           class="btn btn-sm btn-info" title="Detail">
-                                            <i class="bi bi-eye"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-
-                    @if($masterLokasiGudang->penerimaanBarangs->count() > 10)
-                    <div class="text-center mt-3">
-                        <p class="text-muted">Menampilkan 10 dari {{ $masterLokasiGudang->penerimaanBarangs->count() }} penerimaan</p>
-                        <a href="{{ route('penerimaan-barang.index') }}?lokasi={{ $masterLokasiGudang->id }}" 
-                           class="btn btn-success">
-                            <i class="bi bi-list"></i> Lihat Semua Penerimaan di Lokasi Ini
-                        </a>
-                    </div>
-                    @endif
-                @else
-                    <div class="alert alert-light-info">
-                        <i class="bi bi-info-circle"></i> Belum ada penerimaan barang di lokasi ini.
-                    </div>
-                @endif
+                <div class="alert alert-info">
+                    <i class="bi bi-info-circle me-2"></i>
+                    <strong>Fitur Penerimaan Barang belum tersedia.</strong><br>
+                    <small>Model PenerimaanBarang belum dibuat. Hubungi developer untuk mengaktifkan fitur ini.</small>
+                </div>
             </div>
         </div>
 

@@ -113,6 +113,9 @@
                                             <option value="supplier" @selected(old('sumber_masalah') === 'supplier')>
                                                 📦 Supplier (Material Baku)
                                             </option>
+                                            <option value="customer" @selected(old('sumber_masalah') === 'customer')>
+                                                👤 Customer (Keluhan Pelanggan)
+                                            </option>
                                             <option value="proses_produksi" @selected(old('sumber_masalah') === 'proses_produksi')>
                                                 🏭 Proses Produksi (Mesin/Line)
                                             </option>
@@ -148,26 +151,6 @@
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                         <small class="text-muted">Quick fix atau temporary solution untuk defect ini</small>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group-box mb-3">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <label for="tindakan_rekomendasi" class="form-label">Tindakan Awal <span class="text-danger">*</span></label>
-                                        <textarea class="form-control @error('tindakan_rekomendasi') is-invalid @enderror" 
-                                                  id="tindakan_rekomendasi" name="tindakan_rekomendasi" rows="3"
-                                                  placeholder="Tuliskan tindakan awal yang harus dilakukan. Contoh: 1. Pisahkan barang, 2. Beri label NG, 3. Laporkan ke QC Supervisor, 4. Isi form penyimpanan NG"
-                                                  required>{{ old('tindakan_rekomendasi') }}</textarea>
-                                        @error('tindakan_rekomendasi')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                        <small class="text-muted">
-                                            <i class="bi bi-lightbulb text-warning"></i>
-                                            <strong>Immediate action</strong> yang harus dilakukan operator/QC saat menemukan defect. 
-                                            Untuk analisis mendalam dan tindakan rekomendasi final, gunakan modul <strong>RCA Analysis</strong>.
-                                        </small>
                                     </div>
                                 </div>
                             </div>

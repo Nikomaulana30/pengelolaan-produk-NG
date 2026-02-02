@@ -395,7 +395,7 @@
                                 </table>
                             </div>
                             <div class="text-center mt-2">
-                                <a href="{{ route('inspeksi-qc.index') }}" class="btn btn-sm btn-outline-primary">
+                                <a href="{{ route('quality-reinspection.index') }}" class="btn btn-sm btn-outline-primary">
                                     <i class="bi bi-arrow-right"></i> Buka QC Inspection
                                 </a>
                             </div>

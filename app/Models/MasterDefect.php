@@ -42,14 +42,63 @@ class MasterDefect extends Model
         return $query->where('is_rework_possible', true);
     }
 
-    public function getCriticalityBadgeAttribute()
+    // Relationships
+    public function qualityReinspections()
     {
-        $badges = [
-            'minor' => '<span class="badge bg-info">⚪ Minor</span>',
-            'major' => '<span class="badge bg-warning">🟡 Major</span>',
-            'critical' => '<span class="badge bg-danger">🔴 Critical</span>',
+        return $this->hasMany(QualityReinspection::class, 'jenis_defect');
+    }
+    
+    // TODO: ProductionRework doesn't have defect_type_id column
+    // Production reworks are linked through QualityReinspection
+    // public function productionReworks()
+    // {
+    //     return $this->hasMany(ProductionRework::class, 'defect_type_id');
+    // }
+    
+    /**
+     * Get defect occurrence statistics
+     */
+    public function getOccurrenceStatistics()
+    {
+        return [
+            'total_occurrences' => $this->qualityReinspections()->count(),
+            'critical_occurrences' => $this->qualityReinspections()->where('severity_level', 'critical')->count(),
+            'rework_success_rate' => $this->calculateReworkSuccessRate(),
+            'most_affected_products' => $this->getMostAffectedProducts(),
         ];
-        return $badges[$this->criticality_level] ?? '';
+    }
+    
+    /**
+     * Calculate rework success rate for this defect type
+     */
+    protected function calculateReworkSuccessRate()
+    {
+        $totalReworks = $this->productionReworks()->count();
+        if ($totalReworks == 0) return 0;
+        
+        $successfulReworks = $this->productionReworks()
+            ->whereHas('finalQualityCheck', function($q) {
+                $q->where('keputusan_final', 'approved_for_shipment');
+            })->count();
+            
+        return round(($successfulReworks / $totalReworks) * 100, 2);
+    }
+    
+    /**
+     * Get most affected products by this defect
+     */
+    protected function getMostAffectedProducts()
+    {
+        return $this->qualityReinspections()
+            ->join('warehouse_verifications', 'quality_reinspections.warehouse_verification_id', '=', 'warehouse_verifications.id')
+            ->join('dokumen_returs', 'warehouse_verifications.dokumen_retur_id', '=', 'dokumen_returs.id')
+            ->join('customer_complaints', 'dokumen_returs.customer_complaint_id', '=', 'customer_complaints.id')
+            ->select('customer_complaints.produk')
+            ->groupBy('customer_complaints.produk')
+            ->orderByRaw('COUNT(*) DESC')
+            ->limit(5)
+            ->pluck('customer_complaints.produk')
+            ->toArray();
     }
 
     // ===== RELATIONSHIPS =====

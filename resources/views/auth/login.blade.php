@@ -29,15 +29,14 @@
             </div>
 
             <!-- Login Form -->
-            <form id="loginForm">
-                <!-- Username/Email -->
+            <form id="loginForm" method="POST" action="{{ route('login.store') }}">
                 @csrf
                 <div class="mb-3">
                     <label for="username" class="form-label">
                         <i class="bi bi-person-fill me-1"></i>Username atau Email
                     </label>
                     <div class="input-group">
-                        <input type="text" name="email" class="form-control with-icon" id="username" placeholder="Masukkan username atau email" required>
+                        <input type="email" name="email" class="form-control with-icon" id="username" placeholder="Masukkan email" required>
                         <span class="input-icon">
                             <i class="bi bi-person"></i>
                         </span>
@@ -86,9 +85,9 @@
             <!-- Test Credentials Info -->
             <div class="alert alert-info mt-4" style="background-color: #e8f4f8; border-color: #b8dce8; border-radius: 8px;">
                 <small style="color: #0c5460;">
-                    <strong>🔐 Akun Test:</strong><br>
-                    Email: <code>admin@metinca.local</code><br>
-                    Password: <code>admin123456</code>
+                    <strong>🔐 Akun Test Admin:</strong><br>
+                    Email: <code>admin@metinca.com</code><br>
+                    Password: <code>admin123</code>
                 </small>
             </div>
         </div>
@@ -125,35 +124,35 @@
 
             var formData = new FormData(this);
             
-            // Simulate login validation
-            if (username && password) {
-                // Show success message (in real app, this would be an API call)
-                //console.log('Login attempt:', { username, password, remember });
+            // Validate form
+            if (!username || !password) {
+                showError('Email dan password harus diisi!');
+                return;
+            }
+            
+            // Check if App.ajax is available, if not use standard form submit
+            if (typeof App !== 'undefined' && App.ajax) {
+                // Use AJAX if available
+                App.loading('Proses login...');
 
-                App.loading('Proses login');
-
-                App.ajax('{{ route('login.store') }}', 'POST',formData).then(response => {
-                    // Handle successful login
-                    // For example, redirect to dashboard
+                App.ajax('{{ route('login.store') }}', 'POST', formData).then(response => {
+                    App.closeLoading();
                     Swal.fire({
                         title: 'Login Berhasil',
                         text: 'Selamat datang kembali!',
                         icon: 'success',
                         confirmButtonText: 'Lanjutkan'
                     }).then(() => {
-                    window.location.href = '{{ route('dashboard') }}';
+                        window.location.href = '{{ route('dashboard') }}';
                     });
                 }).catch(error => {
-                    // Handle login error
                     App.closeLoading();
-                    App.error('Gagal Login',error.response.data.message || 'Terjadi kesalahan saat login.');
+                    const message = error.response?.data?.message || error.message || 'Terjadi kesalahan saat login.';
+                    showError(message);
                 });
-                // Example: Show error
-                // showError('Username atau password salah!');
-                
-                // Example: Successful login redirect
-                //alert('Login berhasil! Redirecting...');
-                // window.location.href = 'dashboard.html';
+            } else {
+                // Fallback to standard form submit
+                this.submit();
             }
         });
 

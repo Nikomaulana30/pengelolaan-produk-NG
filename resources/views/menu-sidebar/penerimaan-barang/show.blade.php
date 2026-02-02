@@ -45,7 +45,7 @@
             <div class="card mb-4">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">Detail Penerimaan Barang NG</h5>
-                    <a href="{{ route('penerimaan-barang.index') }}" class="btn btn-secondary btn-sm">Kembali</a>
+                    <a href="{{ route('dashboard') }}" class="btn btn-secondary btn-sm">Kembali</a>
                 </div>
                 <div class="card-body">
                     <!-- Section: Informasi Dasar -->
@@ -386,7 +386,7 @@
                                         </button>
                                     </form>
                                 @endif
-                                <a href="{{ route('penerimaan-barang.index') }}" class="btn btn-secondary btn-sm">
+                                <a href="{{ route('dashboard') }}" class="btn btn-secondary btn-sm">
                                     <i class="bx bx-arrow-back"></i> Back to List
                                 </a>
                             </div>

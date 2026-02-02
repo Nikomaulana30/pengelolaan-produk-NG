@@ -568,7 +568,8 @@
                                     <small class="text-muted">
                                         <i class="bi bi-arrow-left-square me-2"></i>Retur Barang
                                     </small>
-                                    <a href="{{ route('retur-barang.index', ['vendor_id' => $masterVendor->id]) }}" class="btn btn-sm btn-outline-primary">
+                                    {{-- <a href="{{ route('retur-barang.index', ['vendor_id' => $masterVendor->id]) }}" class="btn btn-sm btn-outline-primary"> --}}
+                                    <a href="#" class="btn btn-sm btn-outline-secondary disabled">
                                         <i class="bi bi-arrow-right"></i>
                                     </a>
                                 </div>
@@ -578,7 +579,8 @@
                                     <small class="text-muted">
                                         <i class="bi bi-box-arrow-in-down me-2"></i>Penerimaan Barang
                                     </small>
-                                    <a href="{{ route('penerimaan-barang.index', ['vendor_id' => $masterVendor->id]) }}" class="btn btn-sm btn-outline-primary">
+                                    {{-- <a href="{{ route('penerimaan-barang.index', ['vendor_id' => $masterVendor->id]) }}" class="btn btn-sm btn-outline-primary"> --}}
+                                    <a href="#" class="btn btn-sm btn-outline-secondary disabled">
                                         <i class="bi bi-arrow-right"></i>
                                     </a>
                                 </div>

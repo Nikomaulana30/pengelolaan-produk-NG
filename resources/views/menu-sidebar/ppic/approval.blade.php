@@ -40,7 +40,8 @@
                         <i class="bi bi-info-circle me-2"></i>
                         <strong>Informasi:</strong> Finance Approval digunakan untuk APPROVE permintaan biaya yang berasal dari RCA Analysis atau Quality Inspection.
                         Jika belum ada RCA record, silakan 
-                        <a href="{{ route('rca-analysis.index') }}" class="alert-link">buat di menu RCA Analysis terlebih dahulu</a>.
+                        {{-- <a href="{{ route('rca-analysis.index') }}" class="alert-link">buat di menu RCA Analysis terlebih dahulu</a> --}}
+                        <span class="text-muted">buat di menu RCA Analysis terlebih dahulu</span>.
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
 

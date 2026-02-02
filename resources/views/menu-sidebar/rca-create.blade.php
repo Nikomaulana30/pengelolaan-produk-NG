@@ -12,7 +12,8 @@
                     <p class="text-subtitle text-muted">Root Cause Analysis - Analisis Akar Penyebab Masalah</p>
                 </div>
                 <div class="col-12 col-md-4">
-                    <a href="{{ route('rca-analysis.index') }}" class="btn btn-outline-secondary float-end">
+                    {{-- <a href="{{ route('rca-analysis.index') }}" class="btn btn-outline-secondary float-end"> --}}
+                    <a href="#" class="btn btn-outline-secondary float-end disabled">
                         <i class="bi bi-arrow-left"></i> Kembali
                     </a>
                 </div>
@@ -297,7 +298,8 @@
 
                                 <!-- Action Buttons -->
                                 <div class="d-flex gap-2 justify-content-end">
-                                    <a href="{{ route('rca-analysis.index') }}" class="btn btn-secondary">
+                                    {{-- <a href="{{ route('rca-analysis.index') }}" class="btn btn-secondary"> --}}
+                                    <a href="#" class="btn btn-secondary disabled">
                                         <i class="bi bi-x-circle"></i> Batal
                                     </a>
                                     <button type="reset" class="btn btn-warning">

@@ -259,18 +259,18 @@
                                     </div>
 
                                     <div class="col-md-6">
-                                        <label for="butuh_approval" class="form-label">Perlu Approval <span class="text-danger">*</span></label>
-                                        <select class="form-select @error('butuh_approval') is-invalid @enderror" 
-                                                id="butuh_approval" name="butuh_approval" required>
+                                        <label for="memerlukan_approval" class="form-label">Perlu Approval <span class="text-danger">*</span></label>
+                                        <select class="form-select @error('memerlukan_approval') is-invalid @enderror" 
+                                                id="memerlukan_approval" name="memerlukan_approval" required>
                                             <option value="">-- Pilih Opsi --</option>
-                                            <option value="1" @selected(old('butuh_approval', $masterDisposisi->butuh_approval) == true)>
+                                            <option value="1" @selected(old('memerlukan_approval', $masterDisposisi->memerlukan_approval) == 1)>
                                                 ✓ Ya, Perlu Approval
                                             </option>
-                                            <option value="0" @selected(old('butuh_approval', $masterDisposisi->butuh_approval) == false)>
+                                            <option value="0" @selected(old('memerlukan_approval', $masterDisposisi->memerlukan_approval) == 0)>
                                                 ✗ Tidak Perlu Approval
                                             </option>
                                         </select>
-                                        @error('butuh_approval')
+                                        @error('memerlukan_approval')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                         <small class="text-muted">Apakah tindakan ini memerlukan persetujuan dari atasan?</small>

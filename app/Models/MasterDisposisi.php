@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class MasterDisposisi extends Model
 {
-    use SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'master_disposisis';
 
@@ -48,27 +49,40 @@ class MasterDisposisi extends Model
         return $this->belongsTo(MasterLokasiGudang::class, 'master_lokasi_gudang_tujuan_id');
     }
     
+    // Workflow relationships - DISABLED: Tables don't have disposisi_id foreign key
+    // quality_reinspections only has 'disposisi' enum column (not FK)
+    // final_quality_checks doesn't reference master_disposisis at all
+    
+    // Get all PenyimpananNg records that reference this disposisi
+    public function penyimpananNgs()
+    {
+        return $this->hasMany(PenyimpananNg::class, 'master_disposisi_id');
+    }
+    
+    /**
+     * Get disposisi usage statistics
+     */
+    public function getUsageStatistics()
+    {
+        return [
+            'total_penyimpanan_ng' => $this->penyimpananNgs()->count(),
+            'approval_required' => $this->memerlukan_approval,
+            'is_active' => $this->is_active,
+        ];
+    }
+    
+    /**
+     * Check if this disposition requires specific approval workflow
+     */
+    public function requiresApprovalWorkflow()
+    {
+        return $this->memerlukan_approval && $this->is_active;
+    }
+    
     // Alias for consistency
     public function lokasiTujuan()
     {
         return $this->lokasiGudangTujuan();
-    }
-    
-    public function disposisiAssignments()
-    {
-        return $this->hasMany(DisposisiAssignment::class, 'master_disposisi_id');
-    }
-
-    public function penyimpananNgs()
-    {
-        return $this->hasManyThrough(
-            PenyimpananNg::class,
-            DisposisiAssignment::class,
-            'master_disposisi_id',
-            'id',
-            'id',
-            'penyimpanan_ng_id'
-        );
     }
 
     public function scopeActive($query)

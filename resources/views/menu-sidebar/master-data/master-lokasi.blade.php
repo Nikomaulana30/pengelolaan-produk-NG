@@ -118,7 +118,8 @@
                                 </div>
                                 <div class="card-body">
                                     <p class="text-muted small">Lokasi adalah tujuan penyimpanan barang yang diterima dari vendor</p>
-                                    <a href="{{ route('penerimaan-barang.index') }}" class="btn btn-sm btn-primary">
+                                    {{-- <a href="{{ route('penerimaan-barang.index') }}" class="btn btn-sm btn-primary"> --}}
+                                    <a href="#" class="btn btn-sm btn-secondary disabled">
                                         <i class="bi bi-link-45deg"></i> Ke Penerimaan Barang
                                     </a>
                                 </div>

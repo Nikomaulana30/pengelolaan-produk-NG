@@ -48,13 +48,71 @@ class MasterProduk extends Model
     }
 
     // ===== RELATIONSHIPS =====
-
-    /**
-     * Produk belongs to Vendor
-     */
+    
     public function vendor()
     {
         return $this->belongsTo(MasterVendor::class, 'vendor_id');
+    }
+    
+    public function customerComplaints()
+    {
+        return $this->hasMany(CustomerComplaint::class, 'produk_id');
+    }
+    
+    public function dokumentReturs()
+    {
+        return $this->hasMany(DokumenRetur::class, 'produk_id');
+    }
+    
+    public function qualityReinspections()
+    {
+        return $this->hasMany(QualityReinspection::class, 'produk_id');
+    }
+    
+    public function productionReworks()
+    {
+        return $this->hasMany(ProductionRework::class, 'produk_id');
+    }
+    
+    public function finalQualityChecks()
+    {
+        return $this->hasMany(FinalQualityCheck::class, 'produk_id');
+    }
+    
+    public function returnShipments()
+    {
+        return $this->hasMany(ReturnShipment::class, 'produk_id');
+    }
+    
+    /**
+     * Get product quality statistics
+     */
+    public function getQualityStatistics()
+    {
+        $totalComplaints = $this->customerComplaints()->count();
+        $totalProduced = 1000; // Assume from production data
+        
+        return [
+            'total_complaints' => $totalComplaints,
+            'complaint_rate' => $totalProduced > 0 ? round(($totalComplaints / $totalProduced) * 100, 2) : 0,
+            'total_reworks' => $this->productionReworks()->count(),
+            'quality_score' => $this->calculateQualityScore(),
+            'vendor_name' => $this->vendor?->nama_vendor ?? 'Unknown',
+        ];
+    }
+    
+    /**
+     * Calculate quality score (0-100)
+     */
+    protected function calculateQualityScore()
+    {
+        $complaints = $this->customerComplaints()->count();
+        if ($complaints == 0) return 100;
+        
+        $criticalComplaints = $this->customerComplaints()->where('priority', 'critical')->count();
+        $score = 100 - ($complaints * 5) - ($criticalComplaints * 10);
+        
+        return max(0, min(100, $score));
     }
 
     /**

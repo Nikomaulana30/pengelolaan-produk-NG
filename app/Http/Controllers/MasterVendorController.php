@@ -3,14 +3,33 @@
 namespace App\Http\Controllers;
 
 use App\Models\MasterVendor;
+use App\Models\MasterProduk;
+use App\Models\QualityReinspection;
 use Illuminate\Http\Request;
 
 class MasterVendorController extends Controller
 {
     public function index()
     {
-        $vendors = MasterVendor::paginate(15);
-        return view('menu-sidebar.master-data.master-vendor', compact('vendors'));
+        $vendors = MasterVendor::withCount('produks')->paginate(15);
+        
+        // Dynamic statistics
+        $totalVendor = MasterVendor::count();
+        $vendorAktif = MasterVendor::where('is_active', true)->count();
+        
+        // Count total products from all vendors
+        $totalProdukVendor = MasterProduk::whereNotNull('vendor_id')->count();
+        
+        // Count quality issues - just count all quality reinspections for now
+        $totalQualityIssues = QualityReinspection::count();
+        
+        return view('menu-sidebar.master-data.master-vendor', compact(
+            'vendors',
+            'totalVendor',
+            'vendorAktif',
+            'totalProdukVendor',
+            'totalQualityIssues'
+        ));
     }
 
     public function create()
@@ -32,7 +51,11 @@ class MasterVendorController extends Controller
             'person_in_charge' => 'nullable|max:255',
             'kebijakan_retur' => 'required|in:retur_fisik,debit_note,keduanya',
             'deskripsi' => 'nullable|string',
+            'is_active' => 'nullable|boolean',
         ]);
+
+        // Handle checkbox is_active properly
+        $validated['is_active'] = $request->has('is_active') ? 1 : 0;
 
         MasterVendor::create($validated);
 
@@ -62,8 +85,11 @@ class MasterVendorController extends Controller
             'person_in_charge' => 'nullable|max:255',
             'kebijakan_retur' => 'required|in:retur_fisik,debit_note,keduanya',
             'deskripsi' => 'nullable|string',
-            'is_active' => 'boolean',
+            'is_active' => 'nullable|boolean',
         ]);
+
+        // Handle checkbox is_active properly
+        $validated['is_active'] = $request->has('is_active') ? 1 : 0;
 
         $masterVendor->update($validated);
 

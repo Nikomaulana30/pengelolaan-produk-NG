@@ -88,7 +88,9 @@ class StockMovement extends Model
             
             case 'penerimaan':
             case 'penerimaan_barang':
-                return PenerimaanBarang::find($this->reference_id);
+                // DISABLED: PenerimaanBarang model doesn't exist
+                // return PenerimaanBarang::find($this->reference_id);
+                return null;
             
             default:
                 return null;

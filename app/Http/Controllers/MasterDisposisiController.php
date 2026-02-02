@@ -34,9 +34,28 @@ class MasterDisposisiController extends Controller
         }
 
         $disposisis = $query->paginate(15);
+        
         $jenisTindakan = ['rework', 'scrap_disposal', 'return_to_vendor', 'downgrade', 'repurpose'];
         
-        return view('menu-sidebar.master-data.master-disposisi', compact('disposisis', 'jenisTindakan'));
+        // Statistics
+        $totalDisposisi = MasterDisposisi::count();
+        $disposisiAktif = MasterDisposisi::where('is_active', true)->count();
+        $needApproval = MasterDisposisi::where('memerlukan_approval', true)->count();
+        
+        // Count usage from quality_reinspections enum column
+        $totalUsage = \DB::table('quality_reinspections')
+            ->whereIn('disposisi', ['rework', 'scrap', 'return_to_vendor', 'return_to_customer'])
+            ->whereNull('deleted_at')
+            ->count();
+        
+        return view('menu-sidebar.master-data.master-disposisi', compact(
+            'disposisis', 
+            'jenisTindakan',
+            'totalDisposisi',
+            'disposisiAktif',
+            'needApproval',
+            'totalUsage'
+        ));
     }
 
     public function create()
@@ -65,9 +84,13 @@ class MasterDisposisiController extends Controller
             'rack_tujuan' => 'nullable|string',
             'bin_tujuan' => 'nullable|string',
             'lokasi_lengkap_tujuan' => 'nullable|string',
-            'butuh_approval' => 'boolean',
-            'is_active' => 'boolean',
+            'memerlukan_approval' => 'required|in:0,1',
+            'is_active' => 'required|in:0,1',
         ]);
+
+        // Convert to boolean
+        $validated['memerlukan_approval'] = (bool) $validated['memerlukan_approval'];
+        $validated['is_active'] = (bool) $validated['is_active'];
 
         // Auto-generate kode disposisi dari nama
         $validated['kode_disposisi'] = MasterDisposisi::generateKodeDisposisi($validated['nama_disposisi']);
@@ -112,9 +135,13 @@ class MasterDisposisiController extends Controller
             'rack_tujuan' => 'nullable|string',
             'bin_tujuan' => 'nullable|string',
             'lokasi_lengkap_tujuan' => 'nullable|string',
-            'butuh_approval' => 'boolean',
-            'is_active' => 'boolean',
+            'memerlukan_approval' => 'required|in:0,1',
+            'is_active' => 'required|in:0,1',
         ]);
+
+        // Convert to boolean
+        $validated['memerlukan_approval'] = (bool) $validated['memerlukan_approval'];
+        $validated['is_active'] = (bool) $validated['is_active'];
 
         // Jika nama disposisi berubah, regenerate kode
         if ($request->nama_disposisi !== $masterDisposisi->nama_disposisi) {

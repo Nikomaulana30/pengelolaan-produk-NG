@@ -12,7 +12,8 @@
                     <p class="text-subtitle text-muted">Perbarui analisis akar penyebab masalah</p>
                 </div>
                 <div class="col-12 col-md-4">
-                    <a href="{{ route('rca-analysis.index') }}" class="btn btn-outline-secondary float-end">
+                    {{-- <a href="{{ route('rca-analysis.index') }}" class="btn btn-outline-secondary float-end"> --}}
+                    <a href="#" class="btn btn-outline-secondary float-end disabled">
                         <i class="bi bi-arrow-left"></i> Kembali
                     </a>
                 </div>
@@ -361,7 +362,8 @@
                                 <button type="reset" class="btn btn-secondary">
                                     <i class="bi bi-arrow-counterclockwise"></i> Reset Form
                                 </button>
-                                <a href="{{ route('rca-analysis.index') }}" class="btn btn-outline-secondary">
+                                {{-- <a href="{{ route('rca-analysis.index') }}" class="btn btn-outline-secondary"> --}}
+                                <a href="#" class="btn btn-outline-secondary disabled">
                                     <i class="bi bi-x-circle"></i> Batal
                                 </a>
                             </div>
